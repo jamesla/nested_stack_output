@@ -1,0 +1,29 @@
+heat_template_version: 2016-10-14
+
+description: >
+  HOT template to create a private network, a router to the public
+  network, and two servers in the new network. Floating IP addresses
+  are assigned to each server so they are routable from the public network.
+
+parameters:
+  network:
+    type: string
+    default: devopstools_network
+  subnet:
+    type: string
+    default: devopstools_network_subnet
+  image:
+    type: string
+    default: Cirros
+
+resources:
+  host1:
+    type: _host.yaml
+    properties:
+      network: { get_param: network }
+      image: { get_param: image }
+
+outputs:
+  server_ip:
+    description: server ip
+    value: { get_attr: [ host1, server.first_address ] }

@@ -1,0 +1,16 @@
+heat_template_version: pike
+description: host resource
+parameters:
+  image:
+    type: string
+  network:
+    type: string
+resources:
+  server:
+    type: OS::Nova::Server
+    properties:
+      name: test_server
+      image: { get_param: image }
+      flavor: m1.xlarge
+      networks:
+        - network: { get_param: network }
